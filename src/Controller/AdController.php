@@ -6,10 +6,12 @@ use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
-// use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -19,6 +21,7 @@ class AdController extends AbstractController
      * Permet de créer une annonce
      * Utilisation du ManagerRegistry au lieu du ObjectManager
      * @Route("ads/new", name="ads_create")
+     * @IsGranted("ROLE_USER")
      */
 
     public function create(Request $request, ManagerRegistry $managerRegistry)
@@ -130,6 +133,25 @@ class AdController extends AbstractController
         return $this->render('ad/index.html.twig', [
             'ads' => $ads
         ]);
+    }
+
+    /**
+     * @Route("/ads/{slug}/delete", name="ads_delete")
+     * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="Vous n'avez pas le droit d'acceder à cette ressource !")
+     *
+     * @return Response
+     */
+    public function delete(Ad $ad, ManagerRegistry $managerRegistry){
+        $em = $managerRegistry->getManager();
+        $em->remove($ad);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            "l'annonce <strong>{$ad->getTitle()}</strong>a bien été supprimée!"
+        ) ;
+        return $this->redirectToRoute('ads_index');
+
     }
 
     
