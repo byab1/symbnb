@@ -34,6 +34,8 @@ class AdController extends AbstractController
                 $em = $managerRegistry->getManager();
                 $em->persist($image);
             }
+
+            $ad->setAuthor($this->getUser());
             // $manager->getDoctrine()->getManager();
             $em = $managerRegistry->getManager();
             $em->persist($ad);

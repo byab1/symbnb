@@ -49,17 +49,21 @@
                 </div>
             </div>
             <div class="col">
-                <div class="row"> 
+            {# set permet de definir une variable #}
+            {% set a = ad.author %}
+                <div class="row mb-3 align-items-center"> 
                     <div class="col-4">
-                        <img src="http://placehold.it/64x64" alt="Avatar de Byab">
+                    <a href="{{ path('user_show', {'slug': a.slug})}}">
+                        <img src="{{a.picture}}" class="avatar avatar-medium" alt="Avatar de {{a.fullName}}">
+                    </a>
                     </div>
                     <div class="col">
-                        <h3>Byab Makarios</h3>
-                        <span class="bagde badge-primary">3 annonces</span>
+                    <a href="{{ path('user_show', {'slug': a.slug})}}">
+                        <h3>{{a.fullName}}</h3>
+                    </a> 
+                        <span class="bagde badge-primary">{{a.ads | length}} annonces</span>
                     </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, fuga. Nisi inventore nihil harum velit eius vel excepturi ratione natus?</p>
-                    <p>Officiis asperiores expedita dolorum cum assumenda, earum voluptatibus impedit harum totam aperiam facere laudantium reprehenderit inventore nemo ipsum. Architecto, est.</p>
-                    <p>Aliquam impedit aut officia deserunt sunt fuga ullam quia, quod sit qui quo, eos molestiae amet officiis a? Corporis, suscipit!</p>
+                    {{a.description | raw}}
 
                 </div>
             </div>
