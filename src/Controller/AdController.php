@@ -6,7 +6,6 @@ use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -65,6 +64,7 @@ class AdController extends AbstractController
     /**
      * Permet d'afficher le formulaire d'edition
      * @Route("/ads/{slug}/edit", name="ads_edit")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */

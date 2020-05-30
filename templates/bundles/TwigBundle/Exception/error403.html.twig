@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vous n'avez pas le droit d'acceder à cette ressource!{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Lorem ipsum dolor sit amet. !</h1>
+    <div class="alert alert-danger">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, alias!</p>
+    </div>
+    <a href="{{path('homepage')}}" class="btn btn-primary">Retour à l'acceuil</a>
+    <a href="{{path('ads_index')}}" class="btn btn-primary">Nos annonces</a>
+    </div>
+{% endblock %}
